@@ -24,7 +24,7 @@ export default function LoginView() {
     <LoginOverlay
       opened
       error={loginError.value}
-      showForgotPassword
+      noForgotPassword
       i18n={loginI18n}
       onErrorChanged={(event) => {
         loginError.value = event.detail.value;
