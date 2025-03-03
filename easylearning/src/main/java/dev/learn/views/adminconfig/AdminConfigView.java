@@ -12,7 +12,7 @@ import jakarta.annotation.security.RolesAllowed;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("AdminConfig")
-@Route("empty3")
+@Route("adminconfig")
 @Menu(order = 3, icon = LineAwesomeIconUrl.FILE)
 @RolesAllowed("ADMIN")
 public class AdminConfigView extends VerticalLayout {

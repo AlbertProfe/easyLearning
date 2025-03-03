@@ -30,7 +30,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.TextColor;
 import jakarta.annotation.security.RolesAllowed;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
-@PageTitle("Dashboardlearning")
+@PageTitle("Dashboard learning")
 @Route("dashboardlearning")
 @Menu(order = 1, icon = LineAwesomeIconUrl.CHART_AREA_SOLID)
 @RolesAllowed("USER")

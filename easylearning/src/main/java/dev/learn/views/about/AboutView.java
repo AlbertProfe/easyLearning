@@ -12,7 +12,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("About")
-@Route("empty")
+@Route("about")
 @Menu(order = 1, icon = LineAwesomeIconUrl.FILE)
 @AnonymousAllowed
 public class AboutView extends VerticalLayout {

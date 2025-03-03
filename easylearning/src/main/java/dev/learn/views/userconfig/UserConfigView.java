@@ -12,7 +12,7 @@ import jakarta.annotation.security.RolesAllowed;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("UserConfig")
-@Route("empty2")
+@Route("userconfig")
 @Menu(order = 2, icon = LineAwesomeIconUrl.FILE)
 @RolesAllowed("USER")
 public class UserConfigView extends VerticalLayout {
