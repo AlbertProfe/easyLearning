@@ -13,6 +13,7 @@ export const config: ViewConfig = {
 export default function RegisterView() {
   const error = useSignal('');
   const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRepeat, setPasswordRepeat] = useState('');
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -30,7 +31,7 @@ export default function RegisterView() {
     }
 
     try {
-      const result = await register(username, password, avatarFile);
+      const result = await register(username, name, password, avatarFile);
       if (result.success) {
         document.location = '/login';
       } else {
@@ -42,7 +43,7 @@ export default function RegisterView() {
   };
 
   const handleCancel = () => {
-    document.location = '/login';
+    document.location = '/home';
   };
 
   return (
@@ -83,6 +84,13 @@ export default function RegisterView() {
           label="Username"
           value={username}
           onValueChanged={(e) => setUsername(e.detail.value)}
+          className="w-full mb-m"
+        />
+
+         <TextField
+          label="name"
+          value={name}
+          onValueChanged={(e) => setName(e.detail.value)}
           className="w-full mb-m"
         />
 

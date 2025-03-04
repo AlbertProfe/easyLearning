@@ -15,9 +15,7 @@ public class QuizEndpoint {
 
     private final LearningQuestionService service;
 
-    public QuizEndpoint(LearningQuestionService service) {
-
-        this.service = service;
+    public QuizEndpoint(LearningQuestionService service) { this.service = service;
     }
 
     public @Nonnull List<LearningQuestion> getQuestions() {

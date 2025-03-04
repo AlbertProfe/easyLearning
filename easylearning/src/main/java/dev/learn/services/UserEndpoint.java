@@ -25,8 +25,8 @@ public class UserEndpoint {
         return authenticatedUser.get();
     }
 
-    public UserService.RegistrationResult register(String username, String password, MultipartFile avatar) {
-        return userService.register(username, password, avatar);
+    public UserService.RegistrationResult register(String username, String name, String password, MultipartFile avatar) {
+        return userService.register(username, name, password, avatar);
     }
 
     public byte[] getUserAvatar(Long userId) {

@@ -3,8 +3,8 @@ package dev.learn.data;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.time.LocalDateTime;
 
-import java.security.Timestamp;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -17,10 +17,10 @@ public abstract class AbstractEntity {
     private Long id;
 
     @Version
-    private int version;
+    private int version =1;
     @CreatedDate
     @Column(updatable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     private boolean isActive = true;
     public Long getId() {
@@ -33,6 +33,18 @@ public abstract class AbstractEntity {
 
     public int getVersion() {
         return version;
+    }
+
+    public LocalDateTime getCreatedAt() { // Updated getter
+        return createdAt;
+    }
+
+    public boolean isActive() { // Added getter for isActive
+        return isActive;
+    }
+
+    public void setActive(boolean active) { // Added setter for isActive
+        isActive = active;
     }
 
     @Override
