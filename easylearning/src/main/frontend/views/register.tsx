@@ -1,43 +1,42 @@
 import { ViewConfig } from '@vaadin/hilla-file-router/types.js';
 import { useSignal } from '@vaadin/hilla-react-signals';
 import { Button, Dialog, TextField } from '@vaadin/react-components';
+import { register } from 'Frontend/generated/RegisterEndpoint.ts';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from 'Frontend/util/auth.js';
 
 export const config: ViewConfig = {
   menu: { exclude: true },
   flowLayout: false,
 };
 
-export default function LoginView() {
+export default function RegisterView() {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const username = useSignal('');
   const password = useSignal('');
+  const name = useSignal('');
   const error = useSignal('');
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      const result = await login(username.value, password.value);
-      if (result.success) {
-        navigate('/dashboard'); // Redirect to dashboard or another page after successful login
+      const response = await register(username.value, password.value, name.value);
+      if (response === 'User registered successfully!') {
+        navigate('/login');
       } else {
-        error.value = result.message || 'Login failed';
+        error.value = response;
       }
-    } catch (err) {
-      error.value = 'An error occurred during login';
+    } catch (e) {
+      error.value = 'Registration failed. Please try again.';
     }
   };
 
   return (
     <Dialog
       opened
-      headerTitle="Login"
+      headerTitle="Register"
       onClosed={() => navigate(-1)}
     >
       <div className="flex flex-col gap-m">
-
-        <p className="text-center">Sign in to your account</p>
+        <p className="text-center">Create a new account</p>
         <TextField
           label="Username"
           value={username.value}
@@ -51,19 +50,25 @@ export default function LoginView() {
           onValueChanged={(e) => (password.value = e.detail.value)}
           className="w-full"
         />
-        <Button theme="primary" onClick={handleLogin} className="w-full">
-          Login
+        <TextField
+          label="Name"
+          value={name.value}
+          onValueChanged={(e) => (name.value = e.detail.value)}
+          className="w-full"
+        />
+        <Button theme="primary" onClick={handleRegister} className="w-full">
+          Register
         </Button>
         {error.value && <p className="text-red-500 text-center">{error.value}</p>}
 
       <p slot="footer" className="text-center">
-        Don't have an account?{' '}
-        <a href="/register" className="text-blue-500 hover:underline">
-          Register here
+        Already have an account?{' '}
+        <a href="/login" className="text-blue-500 hover:underline">
+          Login here
         </a>
       </p>
-</div>
-    </Dialog>
 
+       </div>
+    </Dialog>
   );
 }
