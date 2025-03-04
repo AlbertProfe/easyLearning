@@ -3,7 +3,8 @@ import { ViewConfig } from '@vaadin/hilla-file-router/types.js';
 import { useSignal } from '@vaadin/hilla-react-signals';
 import { Dialog, TextField, PasswordField, Button, Upload } from '@vaadin/react-components';
 import { useState } from 'react';
-import { register } from 'Frontend/generated/UserEndpoint.ts';
+import { register } from 'Frontend/generated/UserEndpoint';
+import 'Frontend/themes/easylearning/styles.css'; // Add at the top of register.tsx
 
 export const config: ViewConfig = {
   menu: { exclude: true },
@@ -19,10 +20,10 @@ export default function RegisterView() {
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [opened, setOpened] = useState(true);
 
-  const dialogStyles = {
+  /* const dialogStyles = {
     maxWidth: '400px',
     margin: '0 auto',
-  };
+  }; */
 
   const handleSubmit = async () => {
     if (password !== passwordRepeat) {
@@ -31,7 +32,7 @@ export default function RegisterView() {
     }
 
     try {
-      const result = await register(username, name, password, avatarFile);
+      const result = await register(username, name, password, avatarFile as any);
       if (result.success) {
         document.location = '/login';
       } else {
@@ -65,7 +66,8 @@ export default function RegisterView() {
                 <p style={{ fontSize: '0.875rem', color: 'white', margin: 0 }}>Create a new account</p>
               </div>
             }
-      style={dialogStyles}
+      //style={dialogStyles}
+       className="dialog" // Updated from style={dialogStyles}
       footer={
         <div className="flex gap-m">
           <Button onClick={handleCancel}>Cancel</Button>
@@ -82,13 +84,15 @@ export default function RegisterView() {
 
         <TextField
           label="Username"
+          placeholder="tom"
           value={username}
           onValueChanged={(e) => setUsername(e.detail.value)}
           className="w-full mb-m"
         />
 
          <TextField
-          label="name"
+          label="Name"
+          placeholder="Tom Jones"
           value={name}
           onValueChanged={(e) => setName(e.detail.value)}
           className="w-full mb-m"
@@ -96,6 +100,7 @@ export default function RegisterView() {
 
         <PasswordField
           label="Password"
+          placeholder="Password"
           value={password}
           onValueChanged={(e) => setPassword(e.detail.value)}
           className="w-full mb-m"
@@ -103,6 +108,7 @@ export default function RegisterView() {
 
         <PasswordField
           label="Repeat Password"
+          placeholder="Password"
           value={passwordRepeat}
           onValueChanged={(e) => setPasswordRepeat(e.detail.value)}
           className="w-full mb-m"
@@ -112,7 +118,7 @@ export default function RegisterView() {
           accept="image/*"
           maxFiles={1}
           onUploadBefore={(e) => {
-            setAvatarFile(e.detail.files[0]);
+            setAvatarFile(e.detail.file);
           }}
           className="w-full mb-m"
           capture="user"

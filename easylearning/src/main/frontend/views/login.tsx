@@ -1,11 +1,10 @@
+// frontend/views/login.tsx
 import { ViewConfig } from '@vaadin/hilla-file-router/types.js';
 import { useSignal } from '@vaadin/hilla-react-signals';
 import { LoginI18n, LoginOverlay, LoginOverlayElement } from '@vaadin/react-components';
 import { useAuth } from 'Frontend/util/auth.js';
 import { useState } from 'react';
 import { Button } from '@vaadin/react-components/Button.js';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
-
 
 export const config: ViewConfig = {
   menu: { exclude: true },
@@ -24,23 +23,20 @@ export default function LoginView() {
   const { login } = useAuth();
   const loginError = useSignal(false);
   const [opened, setOpened] = useState(true); // Control overlay visibility
-  const navigate = useNavigate(); // Use useNavigate for redirection
 
   const handleCancel = () => {
     setOpened(false); // Close the overlay
-    //navigate('/home'); // Redirect to the register page using react-router-dom
-    document.location = '/home';
+    document.location = '/home'; // Redirect using document.location
   };
 
   return (
     <LoginOverlay
       opened={opened}
       error={loginError.value}
-      ForgotPassword
+      noForgotPassword={false}
       i18n={loginI18n}
       onLogin={async ({ detail: { username, password } }) => {
         const { defaultUrl, error, redirectUrl } = await login(username, password);
-
         if (error) {
           loginError.value = true;
         } else {
@@ -49,21 +45,21 @@ export default function LoginView() {
           document.location = path;
         }
       }}
+      // onOpenedChanged={(e) => setOpened(e.detail.value)} // Sync overlay state
     >
-
-      {/* Centered Cancel Button using Flexbox */}
-            <div
-              slot="footer"
-              style={{
-                display: 'flex',
-                justifyContent: 'center', // Center horizontally
-                width: '100%', // Ensure the div takes full width
-              }}
-            >
-              <Button onClick={handleCancel} theme="tertiary">
-                Cancel
-              </Button>
-            </div>
-          </LoginOverlay>
+      {/* Centered Cancel Button */}
+      <div
+        slot="footer"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        <Button onClick={handleCancel} theme="tertiary">
+          Cancel
+        </Button>
+      </div>
+    </LoginOverlay>
   );
 }
