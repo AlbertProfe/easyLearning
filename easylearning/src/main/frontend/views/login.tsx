@@ -11,7 +11,7 @@ export const config: ViewConfig = {
 const loginI18n: LoginI18n = {
   ...new LoginOverlayElement().i18n,
   header: {
-      title: 'Hilla Auth Starter',
+      title: 'easyLearning',
       description: 'Login using: user/1234 or admin/1234'
       },
 };

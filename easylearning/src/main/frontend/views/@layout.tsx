@@ -61,7 +61,10 @@ export default function MainLayout() {
               </Button>
             </>
           ) : (
-            <Link to="/login">Sign in</Link>
+             <div className="flex flex-row gap-s">
+                   <Link to="/login">Sign in</Link> /
+                   <Link to="/register">Register</Link>
+                 </div>
           )}
         </footer>
       </div>

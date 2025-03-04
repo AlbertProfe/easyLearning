@@ -1,13 +1,13 @@
 package dev.learn.data;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Version;
+import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.security.Timestamp;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {
 
     @Id
@@ -18,7 +18,11 @@ public abstract class AbstractEntity {
 
     @Version
     private int version;
+    @CreatedDate
+    @Column(updatable = false)
+    private Timestamp createdAt;
 
+    private boolean isActive = true;
     public Long getId() {
         return id;
     }
